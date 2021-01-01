@@ -1,4 +1,5 @@
 import React from 'react';
+import teams from 'src/modules/landing-page/contributors.json';
 
 import logo from '../assets/logo.svg';
 import problemSolve from '../assets/problem_solving.svg';
@@ -7,32 +8,58 @@ import {
   ContributorImage,
   JoinButton,
   JoinContainer,
-  JoinText,
   MiddleSection,
   MissionContainer,
   MissionText,
   SolvingImage,
   TeamContainer,
   TeamImageContainer,
-  TeamText,
+  TeamTitle,
   TopSection,
-  TopText,
-  TopTextContainer,
 } from '../components/about';
-import * as contributors from '../components/contributors';
+// import * as contributors from '../components/contributors';
 import { Footer, FooterLine, FooterLogo, Root } from '../components/figma';
+
+const dynamicColor = (teamName: string) => {
+  let color = '#f0ebff';
+
+  if (teamName === 'Core') {
+    color = '#f0ebff';
+  } else if (teamName === 'Development') {
+    color = '#ddf1f0';
+  } else if (teamName === 'Design') {
+    color = '#fff8e7';
+  } else if (teamName === 'Marketing') {
+    color = '#ffebff';
+  }
+
+  return color;
+};
+
+const fetchingteams = () => {
+  const data = teams;
+
+  return data.teams.map(t => (
+    <TeamImageContainer
+      key={t.title}
+      style={{ backgroundColor: dynamicColor(t.title) }}
+    >
+      <TeamTitle>
+        <h2>{`${t.title} Team`}</h2>{' '}
+      </TeamTitle>
+      {t.contributors.map(c => (
+        <ContributorImage key={c.name} src={c.avatar_url} />
+      ))}
+    </TeamImageContainer>
+  ));
+};
 
 const AboutPage: React.FC = (): JSX.Element => (
   <Root>
     <TopSection>
-      <TopTextContainer>
-        <TopText>
-          <h1>
-            We&#39;re a group of volunteers <br /> driven to unify help
-            worldwide
-          </h1>
-        </TopText>
-      </TopTextContainer>
+      <h1>
+        We&#39;re a group of volunteers <br /> driven to unify help worldwide
+      </h1>
     </TopSection>
     <MiddleSection>
       <MissionContainer>
@@ -54,22 +81,21 @@ const AboutPage: React.FC = (): JSX.Element => (
           </p>
         </MissionText>
       </MissionContainer>
-      <SolvingImage src={problemSolve} /> <br />
+      <SolvingImage src={problemSolve} />
     </MiddleSection>
     <MiddleSection>
       <TeamContainer>
-        <TeamText>
-          <h1> Meet Our Team </h1>
-          <br />
-          <p>
-            Hailing from LA to Morocco to Portugal to Bangladesh, we’re an
-            international collective of volunteers from all walks of life,
-            united to ensure that everyone, everywhere can Reach4Help.
-          </p>
-        </TeamText>
+        <h1>Meet Our Team</h1>
+        <p>
+          Hailing from LA to Morocco to Portugal to Bangladesh, we’re an
+          international collective of volunteers from all walks of life, united
+          to ensure that everyone, everywhere can Reach4Help.
+        </p>
       </TeamContainer>
     </MiddleSection>
-    <TeamImageContainer>
+    {fetchingteams()}
+    {/* <TeamImageContainer>
+      <h1>Development</h1>
       <ContributorImage src={contributors.AlexVanino.imgSrc} />
       <ContributorImage src={contributors.BurhanTuerker.imgSrc} />
       <ContributorImage src={contributors.Cinthyaejh.imgSrc} />
@@ -108,19 +134,16 @@ const AboutPage: React.FC = (): JSX.Element => (
       <ContributorImage src={contributors.WinggoTse.imgSrc} />
       <ContributorImage src={contributors.SamLanning.imgSrc} />
       <ContributorImage src={contributors.DavidAlecrim.imgSrc} />
-    </TeamImageContainer>{' '}
+    </TeamImageContainer>{' '} */}
     <br />
     <MiddleSection>
       <JoinContainer>
-        <JoinText>
-          <h3>Interested in joining us?</h3> <br />
-          <p>
-            We’re looking for volunteer ReactJS developers, marketing/PR
-            strategists and UI/UX designers to help ramp up our efforts fighting
-            the US West Coast wildfires and the incoming second wave of
-            COVID-19.
-          </p>
-        </JoinText>
+        <h3>Interested in joining us?</h3> <br />
+        <p>
+          We’re looking for volunteer ReactJS developers, marketing/PR
+          strategists and UI/UX designers to help ramp up our efforts fighting
+          the US West Coast wildfires and the incoming second wave of COVID-19.
+        </p>
       </JoinContainer>{' '}
       <br />
     </MiddleSection>
